@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lacouf.al420565final.model.Client;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -17,6 +18,9 @@ public class ClientController {
 
     private final List<Client> clients = ClientFactory.getClients();
 
+    private final String HOMME_GENDER = "M";
+    private final String ONTARIO_PROVINCE = "ON";
+
     @GetMapping
     public List<Client> getAll(){
         return clients;
@@ -24,11 +28,11 @@ public class ClientController {
 
     @GetMapping("/hommes")
     public List<Client> getHommes(){
-        return clients.stream().filter(c -> "M".equalsIgnoreCase(c.getGender())).collect(Collectors.toList());
+        return clients.stream().filter(c -> Objects.equals(HOMME_GENDER,c.getGender())).collect(Collectors.toList());
     }
 
     @GetMapping("/ontariens")
     public List<Client> getOntariens(){
-        return clients.stream().filter(c -> "ON".equalsIgnoreCase(c.getProvince())).collect(Collectors.toList());
+        return clients.stream().filter(c -> Objects.equals(ONTARIO_PROVINCE,c.getProvince())).collect(Collectors.toList());
     }
 }
